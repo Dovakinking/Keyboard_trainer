@@ -6,6 +6,7 @@ from tkinter import messagebox
 from Editor import Start
 from Read_Keys import Headmap
 from Window import Window
+import json
 
 
 def Exit():
@@ -62,12 +63,21 @@ def Help():
         'Guide', '  Все активные кнопки расположены в верхнем меню программы в разделе "Программа"\n  Чтобы начать использовать клавиатурный тренажёр, введите нужную фразу в поле ниже или же импортируйте её из текстового файла, после чего начните работу тренажёра с помощью кнопки "Начать" в меню "Программа".\n    Также есть функция "Случайное предложение", которая псевдослучайным образом выбирает предложение из имеющихся в базе программы и вставляет его в текстовое поле.\n    Просмотр клавиш, на которых чаще всего ошибается пользователь, доступен через кнопку "Посмотреть headmap ошибок" в меню "Программа".')
 
 
+def Stat():
+    with open('Statistics.txt', "r") as json_file:
+        statistics = json.load(json_file)
+    messagebox.showinfo(
+        'Statistics', '    Всего вы правильно напечатали ' + str(int(statistics["right_tap"])) + ' символов из ' + str(int(statistics["count_tap"])) + ' за ' + str(round(100*statistics["time"])/100) + ' с. Это ' + str(round(10000*statistics["right_tap"]/(statistics["count_tap"]+0.001)) / 100) + ' %'+' попадания по клавишам')
+
+
 def Null():
     result = messagebox.askyesno(title="Подтвержение операции",
                                  message="Вы действительно хотите обнулить вашу статистику?")
     if result:
         with open('data.txt', "w") as file:
             file.write("{}")
+        with open('Statistics.txt', "w") as file:
+            file.write('{"time": 0, "right_tap": 0}')
         messagebox.showinfo("Результат", "Статистика обнулена")
     else:
         messagebox.showinfo("Результат", "Статистика сохранена")
@@ -94,7 +104,7 @@ main_window.config(menu=main_menu)
 
 
 text_editor = Text(width=96, font=("Comic Sans MS", 15))
-text_editor.insert("1.0", "Введите сюда предложение, которое хотите напечатать, или выберете файл, из которого импортировать нужное вам предлодение из меню выше. Вы можете экспортировать текст из этого текстового поля в файл.")
+text_editor.insert("1.0", "Введите сюда предложение, которое хотите напечатать, или выберете файл, из которого импортировать нужное вам предложение из меню выше. Вы можете экспортировать текст из этого текстового поля в файл.")
 text_editor.grid(column=0, columnspan=2, row=0)
 
 main_filemenu = Menu(main_menu, tearoff=0)
@@ -104,6 +114,7 @@ main_filemenu.add_command(
     label="Случайное предложение", command=RandomSentence)
 main_filemenu.add_command(label="Сохранить предложение...", command=SaveFile)
 main_filemenu.add_command(label="Посмотреть headmap ошибок", command=Headmap)
+main_filemenu.add_command(label="Посмотреть статистику", command=Stat)
 main_filemenu.add_command(label="Обнулить статистику ошибок", command=Null)
 main_filemenu.add_command(label="Выход", command=Exit)
 
