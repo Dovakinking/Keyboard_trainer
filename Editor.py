@@ -10,6 +10,8 @@ i = 0
 wr_chr = dict()
 dt_strt = 0
 
+# Функция, которая завершает работу программы для считывания нажатий, а также записывает результаты в файл data.txt
+
 
 def End():
     global dt_strt
@@ -38,6 +40,8 @@ def End():
         message += 'Try again, you will succeed!\n'
     messagebox.showinfo('Congratulation', message)
 
+# Обработка нажатий на клавиши
+
 
 def key_pressed(event):
     global key
@@ -63,6 +67,8 @@ def key_pressed(event):
         if i == len(sentence):
             End()
 
+# Сохранение результатов
+
 
 def SaveResult(old_json, wr_chr):
     with open(old_json) as json_file:
@@ -75,6 +81,8 @@ def SaveResult(old_json, wr_chr):
                 old_wr_chr[i] = wr_chr[i]
         with open(old_json, 'w') as outfile:
             json.dump(old_wr_chr, outfile)
+
+# Запуск приложения
 
 
 def Start(file_sentence):
@@ -91,7 +99,7 @@ def Start(file_sentence):
     dt_strt = 0
     print(sentence)
 
-
+# Для тестов
 # window = tkinter.Tk()
 # window.title("New wind")
 # window.geometry('1200x720')

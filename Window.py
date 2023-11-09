@@ -2,10 +2,12 @@ import json
 import tkinter as tk
 from Editor import key_pressed
 
+# Не придумал ничего лучше, чем создание глобальных переменных, отвечающих за время, количество правильных и просто нажатий.
 time = 0.0
 count_tap = 0.0
 right_tap = 0.0
-b = False
+
+# Сохранение результатов в формате json в statistics.txt
 
 
 def SaveResult(old_json, time, right_tap, count_tap):
@@ -24,6 +26,7 @@ def SaveResult(old_json, time, right_tap, count_tap):
 
 def Window(sent):
 
+    # Функция самовызывается раз в 0.1 секунду и обновляет надпись, в которой отображается статистика
     def update_time():
         if (root.winfo_exists()):
             global time
@@ -36,6 +39,7 @@ def Window(sent):
                 "\nNext letter: '" + label["text"][0]+"'"
             label1.config(text=stat)
             root.after(100, update_time)
+# Костыль, позволяющий передать event нажатия в две функции а также посчитать количество нажатий
 
     def crutch(event):
         global count_tap

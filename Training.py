@@ -9,11 +9,11 @@ from Window import Window
 import json
 
 
-def Exit():
+def Exit():  # Завершение работы программы
     main_window.destroy()
 
 
-def OpenFile():
+def OpenFile():  # Открытие файла с помощью filedialog
     filepath = filedialog.askopenfilename()
     if filepath != "":
         with open(filepath, "r") as file:
@@ -22,7 +22,7 @@ def OpenFile():
             text_editor.insert("1.0", text)
 
 
-def SaveFile():
+def SaveFile():  # Сохранение файла
     filepath = filedialog.asksaveasfilename()
     if filepath != "":
         text = text_editor.get("1.0", END)
@@ -30,7 +30,7 @@ def SaveFile():
             file.write(text)
 
 
-def RandomSentence():
+def RandomSentence():  # Выборка случайного предложения из файла storage
     with open('storage.txt', "r") as file:
         ran = random.randint(0, 39)
         text = file.readlines()[ran]
@@ -38,14 +38,16 @@ def RandomSentence():
         text_editor.insert("1.0", text)
 
 
-def StartText():
+def StartText():  # Запуск  тренажёна
     sentence = ""
+    # Если длина предложения больше 5 символов, то считываем его до момента, пока в тексте не встретится перенос на следующую строку
     if (len(text_editor.get("1.0", END)) > 5):
         for i in text_editor.get("1.0", END):
             if (i != '\n'):
                 sentence += i
             else:
                 break
+    # Если же длина предложения не больше 4 символов, то вставляем случайное предложение из нашего файла
     else:
         RandomSentence()
         sentence = ""
@@ -54,20 +56,26 @@ def StartText():
                 sentence += i
             else:
                 break
+    # Запуск программы, которая отвечает за написание внутри неё предложения
     Window(sentence)
+    # Запуск программы, которая отвечает за реализацию клавиатурного тренажёра
     Start(sentence)
 
 
+# Окно с краткой инструкцией к приложению
 def Help():
     messagebox.showinfo(
         'Guide', '  Все активные кнопки расположены в верхнем меню программы в разделе "Программа"\n  Чтобы начать использовать клавиатурный тренажёр, введите нужную фразу в поле ниже или же импортируйте её из текстового файла, после чего начните работу тренажёра с помощью кнопки "Начать" в меню "Программа".\n    Также есть функция "Случайное предложение", которая псевдослучайным образом выбирает предложение из имеющихся в базе программы и вставляет его в текстовое поле.\n    Просмотр клавиш, на которых чаще всего ошибается пользователь, доступен через кнопку "Посмотреть headmap ошибок" в меню "Программа".')
 
 
+# Окно со статистикой
 def Stat():
     with open('Statistics.txt', "r") as json_file:
         statistics = json.load(json_file)
     messagebox.showinfo(
         'Statistics', '    Всего вы правильно напечатали ' + str(int(statistics["right_tap"])) + ' символов из ' + str(int(statistics["count_tap"])) + ' за ' + str(round(100*statistics["time"])/100) + ' с. Это ' + str(round(10000*statistics["right_tap"]/(statistics["count_tap"]+0.001)) / 100) + ' %'+' попадания по клавишам')
+
+# Обнуление статистики
 
 
 def Null():
@@ -83,6 +91,7 @@ def Null():
         messagebox.showinfo("Результат", "Статистика сохранена")
 
 
+# Создание основного окна и настройка его параметров
 main_window = Tk()
 main_window.title('Клавиатурный тренажёр')
 main_window.geometry('1200x720')
@@ -102,11 +111,12 @@ frame = Frame(
 main_menu = Menu(main_window)
 main_window.config(menu=main_menu)
 
-
+# Создание "шаблонного" предложения
 text_editor = Text(width=96, font=("Comic Sans MS", 15))
 text_editor.insert("1.0", "Введите сюда предложение, которое хотите напечатать, или выберете файл, из которого импортировать нужное вам предложение из меню выше. Вы можете экспортировать текст из этого текстового поля в файл.")
 text_editor.grid(column=0, columnspan=2, row=0)
 
+# Создание меню с соотв. вкладками
 main_filemenu = Menu(main_menu, tearoff=0)
 main_filemenu.add_command(label="Начать", command=StartText)
 main_filemenu.add_command(label="Открыть предложение...", command=OpenFile)
@@ -118,6 +128,7 @@ main_filemenu.add_command(label="Посмотреть статистику", com
 main_filemenu.add_command(label="Обнулить статистику ошибок", command=Null)
 main_filemenu.add_command(label="Выход", command=Exit)
 
+# Инструкция по работе в тренажёре
 main_helpmenu = Menu(main_menu, tearoff=0)
 main_helpmenu.add_command(label="Руководство", command=Help)
 

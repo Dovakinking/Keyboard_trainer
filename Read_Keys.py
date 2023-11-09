@@ -5,7 +5,7 @@ import numpy as np
 
 
 def Headmap():
-    # Создание данных для тепловой карты
+    # Создание данных для тепловой карты, делал по документации
     russian_layout = [['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
                       ['', 'й', 'ц', 'у', 'к', 'е', 'н', 'г',
                           'ш', 'щ', 'з', 'х', 'ъ'],
@@ -17,7 +17,7 @@ def Headmap():
                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
+    # Маска, которая прячет ненужные клавиши на heatmap клавиатуры
     russian_mask = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -37,7 +37,7 @@ def Headmap():
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]]
-
+# Считываем колчиество нажатий на определённый символ и записываем в словарь
     with open('data.txt') as json_file:
         old_wr_chr = json.load(json_file)
         for i in old_wr_chr:
@@ -55,7 +55,7 @@ def Headmap():
 
     array_r_2d = np.array(russian_count)
     array_e_2d = np.array(english_count)
-
+    # Перезапись масок (не понял как использовать двумерные массивы, воспользовался найденной фичей)
     mask_r = np.ones_like(russian_mask)
     for i in range(len(mask_r)):
         for j in range(len(mask_r[i])):
@@ -74,6 +74,6 @@ def Headmap():
     sns.heatmap(data=array_e_2d, annot=np.array(
         english_layout), mask=mask_e, fmt="", ax=ax[1])
     ax[1].set_title('Английская раскладка')
-
+    # Генерация и показ heatmap а
     plt.tight_layout()
     plt.show()
