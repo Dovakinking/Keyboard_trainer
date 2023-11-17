@@ -1,0 +1,1 @@
+{"time": 58.4, "right_tap": 155.0, "count_tap": 221.0}
