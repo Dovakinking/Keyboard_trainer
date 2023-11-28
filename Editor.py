@@ -1,5 +1,3 @@
-# -*- coding: cp1251 -*-
-
 import json
 from tkinter import messagebox
 import time
@@ -10,7 +8,7 @@ i = 0
 wr_chr = dict()
 dt_strt = 0
 
-# Ôóíêöèÿ, êîòîðàÿ çàâåðøàåò ðàáîòó ïðîãðàììû äëÿ ñ÷èòûâàíèÿ íàæàòèé, à òàêæå çàïèñûâàåò ðåçóëüòàòû â ôàéë data.txt
+# Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ, ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð·Ð°Ð²ÐµÑ€ÑˆÐ°ÐµÑ‚ Ñ€Ð°Ð±Ð¾Ñ‚Ñƒ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ Ð´Ð»Ñ ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ð¹, Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ð·Ð°Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÑ‚ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ñ‹ Ð² Ñ„Ð°Ð¹Ð» data.txt
 
 
 def End():
@@ -40,7 +38,7 @@ def End():
         message += 'Try again, you will succeed!\n'
     messagebox.showinfo('Congratulation', message)
 
-# Îáðàáîòêà íàæàòèé íà êëàâèøè
+# ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ð¹ Ð½Ð° ÐºÐ»Ð°Ð²Ð¸ÑˆÐ¸
 
 
 def key_pressed(event):
@@ -50,7 +48,7 @@ def key_pressed(event):
     global i
     global dt_strt
     if len(sentence) == 0:
-        sentence = "Ïóñòîå ïðåäëîæåíèå"
+        sentence = "ÐŸÑƒÑÑ‚Ð¾Ðµ Ð¿Ñ€ÐµÐ´Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ"
     key = event.char
     if len(key) > 0:
         if i < len(sentence):
@@ -67,7 +65,7 @@ def key_pressed(event):
         if i == len(sentence):
             End()
 
-# Ñîõðàíåíèå ðåçóëüòàòîâ
+# Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð¾Ð²
 
 
 def SaveResult(old_json, wr_chr):
@@ -82,7 +80,7 @@ def SaveResult(old_json, wr_chr):
         with open(old_json, 'w') as outfile:
             json.dump(old_wr_chr, outfile)
 
-# Çàïóñê ïðèëîæåíèÿ
+# Ð—Ð°Ð¿ÑƒÑÐº Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ
 
 
 def Start(file_sentence):
@@ -98,15 +96,3 @@ def Start(file_sentence):
     wr_chr = dict()
     dt_strt = 0
     print(sentence)
-
-# Äëÿ òåñòîâ
-# window = tkinter.Tk()
-# window.title("New wind")
-# window.geometry('1200x720')
-# mainmenu = Menu(window)
-# window.config(menu=mainmenu)
-# filemenu = Menu(mainmenu, tearoff=0)
-# filemenu.add_command(label="Go", command=StartText)
-# mainmenu.add_cascade(label="File", menu=filemenu)
-# window.withdraw()
-# window.mainloop()

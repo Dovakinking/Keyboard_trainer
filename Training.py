@@ -1,8 +1,5 @@
 import random
-from tkinter import *
-from tkinter import filedialog
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import END, Frame, Menu, PhotoImage, Text, Tk, filedialog, messagebox
 from Editor import Start
 from Read_Keys import Headmap
 from Window import Window
@@ -91,49 +88,51 @@ def Null():
         messagebox.showinfo("Результат", "Статистика сохранена")
 
 
-# Создание основного окна и настройка его параметров
-main_window = Tk()
-main_window.title('Клавиатурный тренажёр')
-main_window.geometry('1200x720')
-icon = PhotoImage(file="Keyboard1.png")
-main_window.iconphoto(False, icon)
+if __name__ == '__main__':
+    # Создание основного окна и настройка его параметров
+    main_window = Tk()
+    main_window.title('Клавиатурный тренажёр')
+    main_window.geometry('1200x720')
+    icon = PhotoImage(file="Keyboard1.png")
+    main_window.iconphoto(False, icon)
 
-main_window.grid_rowconfigure(index=0, weight=1)
-main_window.grid_columnconfigure(index=0, weight=1)
-main_window.grid_columnconfigure(index=1, weight=1)
+    main_window.grid_rowconfigure(index=0, weight=1)
+    main_window.grid_columnconfigure(index=0, weight=1)
+    main_window.grid_columnconfigure(index=1, weight=1)
 
-frame = Frame(
-    main_window,
-    padx=10,
-    pady=10
-)
+    frame = Frame(
+        main_window,
+        padx=10,
+        pady=10
+    )
 
-main_menu = Menu(main_window)
-main_window.config(menu=main_menu)
+    main_menu = Menu(main_window)
+    main_window.config(menu=main_menu)
 
-# Создание "шаблонного" предложения
-text_editor = Text(width=96, font=("Comic Sans MS", 15))
-text_editor.insert("1.0", "Введите сюда предложение, которое хотите напечатать, или выберете файл, из которого импортировать нужное вам предложение из меню выше. Вы можете экспортировать текст из этого текстового поля в файл.")
-text_editor.grid(column=0, columnspan=2, row=0)
+    # Создание "шаблонного" предложения
+    text_editor = Text(width=96, font=("Comic Sans MS", 15))
+    text_editor.insert("1.0", "Введите сюда предложение, которое хотите напечатать, или выберете файл, из которого импортировать нужное вам предложение из меню выше. Вы можете экспортировать текст из этого текстового поля в файл.")
+    text_editor.grid(column=0, columnspan=2, row=0)
 
-# Создание меню с соотв. вкладками
-main_filemenu = Menu(main_menu, tearoff=0)
-main_filemenu.add_command(label="Начать", command=StartText)
-main_filemenu.add_command(label="Открыть предложение...", command=OpenFile)
-main_filemenu.add_command(
-    label="Случайное предложение", command=RandomSentence)
-main_filemenu.add_command(label="Сохранить предложение...", command=SaveFile)
-main_filemenu.add_command(label="Посмотреть headmap ошибок", command=Headmap)
-main_filemenu.add_command(label="Посмотреть статистику", command=Stat)
-main_filemenu.add_command(label="Обнулить статистику ошибок", command=Null)
-main_filemenu.add_command(label="Выход", command=Exit)
+    # Создание меню с соотв. вкладками
+    main_filemenu = Menu(main_menu, tearoff=0)
+    main_filemenu.add_command(label="Начать", command=StartText)
+    main_filemenu.add_command(label="Открыть предложение...", command=OpenFile)
+    main_filemenu.add_command(
+        label="Случайное предложение", command=RandomSentence)
+    main_filemenu.add_command(
+        label="Сохранить предложение...", command=SaveFile)
+    main_filemenu.add_command(
+        label="Посмотреть headmap ошибок", command=Headmap)
+    main_filemenu.add_command(label="Посмотреть статистику", command=Stat)
+    main_filemenu.add_command(label="Обнулить статистику ошибок", command=Null)
+    main_filemenu.add_command(label="Выход", command=Exit)
 
-# Инструкция по работе в тренажёре
-main_helpmenu = Menu(main_menu, tearoff=0)
-main_helpmenu.add_command(label="Руководство", command=Help)
+    # Инструкция по работе в тренажёре
+    main_helpmenu = Menu(main_menu, tearoff=0)
+    main_helpmenu.add_command(label="Руководство", command=Help)
 
-main_menu.add_cascade(label="Программа", menu=main_filemenu)
-main_menu.add_cascade(label="Справка", menu=main_helpmenu)
+    main_menu.add_cascade(label="Программа", menu=main_filemenu)
+    main_menu.add_cascade(label="Справка", menu=main_helpmenu)
 
-
-main_window.mainloop()
+    main_window.mainloop()

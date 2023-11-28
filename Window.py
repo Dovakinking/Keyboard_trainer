@@ -50,12 +50,11 @@ def Window(sent):
     def update_label(event):
         text = label["text"]
         global right_tap
-        if len(text) > 1:
-            if text[0] == event.char:
-                right_tap += 1
-                if (right_tap == 1):
-                    update_time()
-                label["text"] = text[1:]
+        if len(text) > 1 and text[0] == event.char:
+            right_tap += 1
+            if right_tap == 1:
+                update_time()
+            label["text"] = text[1:]
         else:
             global count_tap
             global time
